@@ -1,4 +1,4 @@
-import Home from './home'
+import Home from './home/index.ja'
 import React from "react"
 
 const IndexPage = (props) => (

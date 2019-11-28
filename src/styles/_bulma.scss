@@ -1,0 +1,13 @@
+$navbar-dropdown-border-top: 0px solid white;
+$navbar-item-hover-color: black;
+$navbar-item-hover-background-color: transparent;
+$navbar-dropdown-arrow: transparent;
+$navbar-height: 5rem;
+// $footer-background-color: transparent;
+$footer-color: $main-color;
+$footer-padding: 1.7rem 0rem;
+.footer {
+  margin-top: 3em;
+}
+// Have to import it at the end
+@import "~bulma/bulma.sass";

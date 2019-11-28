@@ -1,0 +1,24 @@
+@charset "utf-8";
+// If need, change your variables before importing Bulma
+$title-color: #ff0000;
+:root {
+  --main-color: black;
+  --sec-color: grey;
+  --main-bg: white;
+  --sec-bg: #c6538c;
+}
+
+$main-color: black;
+@import "bulma";
+@import "base";
+@import "fonts";
+
+html {
+  font-size: 12px;
+  @include tablet {
+    font-size: 16px;
+  }
+  @include desktop {
+    font-size: 20px;
+  }
+}

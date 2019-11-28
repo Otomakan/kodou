@@ -1,0 +1,80 @@
+install gatsby , gatsby create, 
+
+i18 n react18intl, Gatsby plugin, react-i18next
+https://www.gatsbyjs.org/docs/localization-i18n/
+gatsby-plugin-i18n: Crteates a new riyte fir your content but no translation
+
+react-intl: uses JS internationalization API, use REact context and HOC to dynamically load language modules
+
+```js
+ languages: {
+   langs: ['en', 'js'],
+  defaultLangKey: 'en'}
+
+react-18next
+built on i18next uses components to make sure tranlsations rencder correclty
+
+Making gatsby language aware :
+In gatsby-config.js add in your sitedmetadata the availbale languages: 
+
+```js
+query SiteInfoQuery {
+      site {
+        siteMetadata {
+          title
+          languages {
+            defaultLangKey
+            langs
+          }    
+        }
+      }
+    }
+    ```
+
+then we can access the avaialbale languages in the component like this:
+```js
+languages={data.site.siteMetadata.languages.langs}
+```
+Adding language context to layout:
+
+In our Layout file let's make our navbar language aware by querying the languages metadata
+
+IN `layout.js` add defualtLangKey and langs to Metadata SiteTitleQuery
+
+We Added ptz-i18n
+
+in header:
+```  const allPages = {
+    'en':['Concept', 'Work', 'Team', 'News', 'Contact'],
+    'ja': ['コンセプト','仕事','チーム','ニュース','連絡先']
+  }
+```
+to translate all the titles
+
+
+
+Added bulma to the project 
+yarn add bulma node-sass gatsby-plugin-sass
+
+react intl
+https://github.com/formatjs/react-intl
+Changes stuff like dates
+
+Add the little menu 
+langmap 
+<a className="navbar-link">
+            {langmap[langKey]['native name']}
+          </a>
+  const currentLanguageTitles = allLanguageTitles[langKey] || allLanguageTitles['en']
+  const allLinks = currentLanguageTitles.map((page, i) => ({
+    name: page,
+    url: `${homeLink.replace(defaultLangKey, '')}/${allLanguageTitles.en[i].toLowerCase()}`
+  }))
+Maybe do something bett
+
+in Layout
+import "../styles.scss"
+
+Add youtube support
+https://www.gatsbyjs.org/packages/gatsby-remark-embed-youtube/
+yarn add gatsby-remark-embed-youtube
