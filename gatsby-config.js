@@ -2,7 +2,6 @@ const languages = require('./data/languages')
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 })
-console.log(process.env)
 
 module.exports = {
   siteMetadata: {
@@ -49,15 +48,15 @@ module.exports = {
     // Adding SASS support
     `gatsby-plugin-sass`,
 
-    // 
     `gatsby-transformer-sharp`, `gatsby-plugin-sharp`,
 
+    
     //Cosmic configuration
     {
     resolve: `gatsby-source-cosmicjs`,
     options: {
       bucketSlug: process.env.COSMIC_BUCKET,
-      objectTypes: [`team-members`],
+      objectTypes: [`team-members`, 'works'],
       // If you have enabled read_key to fetch data (optional).
       apiAccess: {
         read_key: process.env.COSMIC_ENV_KEY,

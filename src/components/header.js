@@ -4,23 +4,26 @@ import React from "react"
 import { getCurrentLangKey, getLangs, getUrlForLang } from 'ptz-i18n'
 import langmap from 'langmap'
 import {useState} from 'react'
+import {localizeUrl} from '../../utils/localization'
 
 const Header = ({ languages, location, defaultLangKey}) => {
-  const url = location.pathname.substr(1)
+  const url = location.pathname.substr()
   const langKey = getCurrentLangKey(languages, defaultLangKey, url)
   
   // Create a home link by adding a slash before the language and if it
-  const homeLink = `${langKey}`.replace(defaultLangKey, '')
+  const homeLink = localizeUrl(langKey, defaultLangKey, '/')
 
-  // get langs return language
+  // get langs return language menu information
   const langsMenu = getLangs(
     languages, 
     langKey, 
     getUrlForLang(homeLink, url)).map((item) => {
       return ({ 
         ...item, 
-        link: item.link.replace(defaultLangKey+'/', '') 
+        link: item.link.replace(`/${defaultLangKey}`, '')
     })})
+    // {langKey: "en", selected: false, link: "/team"}
+    // {langKey: "ja", selected: true, link: "/ja/team"}
 
   console.log(langsMenu)
   const allLanguageTitles = {
