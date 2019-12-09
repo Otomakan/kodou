@@ -4,39 +4,40 @@ import React from "react"
 import { getCurrentLangKey, getLangs, getUrlForLang } from 'ptz-i18n'
 import langmap from 'langmap'
 import {useState} from 'react'
-import {localizeUrl} from '../../utils/localization'
+import {localizeUrl, buildMenu} from '../../utils/localization'
 
-const Header = ({ languages, location, defaultLangKey}) => {
-  const url = location.pathname.substr()
-  const langKey = getCurrentLangKey(languages, defaultLangKey, url)
+const Header = ({ languages, location, defaultLang}) => {
+
+  const url = location.pathname
+  const currentLangKey = getCurrentLangKey(languages, defaultLang, url)
   
   // Create a home link by adding a slash before the language and if it
-  const homeLink = localizeUrl(langKey, defaultLangKey, '/')
+  const homeLink = localizeUrl(currentLangKey, defaultLang, '/')
 
-  // get langs return language menu information
-  const langsMenu = getLangs(
-    languages, 
-    langKey, 
-    getUrlForLang(homeLink, url)).map((item) => {
-      return ({ 
-        ...item, 
-        link: item.link.replace(`/${defaultLangKey}`, '')
-    })})
-    // {langKey: "en", selected: false, link: "/team"}
-    // {langKey: "ja", selected: true, link: "/ja/team"}
+  // // Get langs return language menu information
 
-  console.log(langsMenu)
+  // langsMenu will allow us to build a dropdown with all the available language options
+  const langsMenu = buildMenu(languages, defaultLang, currentLangKey, url)
+  // On the `/team` page this will return the following array
+  //  [{selected: true, link: "/team/", langKey: "en"},
+  //  {selected: false, link: "/ja/team/", langKey: "ja"}]
+
+  // All the navigation menu item titles
   const allLanguageTitles = {
     'en':['Concept', 'Work', 'Team', 'News', 'Contact'],
-    'ja': ['コンセプト','仕事','チーム','ニュース','連絡先']
+    'ja': ['コンセプト', '仕事', 'チーム', 'ニュース', '連絡先']
   }
+
   // Selecting the current language and default to english titles
-  const currentLanguageTitles = allLanguageTitles[langKey] || allLanguageTitles['en']
-  // We have to do a weird trick where we use English as the default slugs
-  const allLinks = currentLanguageTitles.map((page, i) => ({
+  const currentLanguageTitles = allLanguageTitles[currentLangKey] || allLanguageTitles['en']
+
+  // allNavigationLinks contains all the pages name, with urls in every supported language
+  const allNavigationLinks = currentLanguageTitles.map((page, i) => ({
     name: page,
-    url: `${homeLink.replace(defaultLangKey, '')}/${allLanguageTitles.en[i].toLowerCase()}`
+    url: `${homeLink.replace(defaultLang, '')}${allLanguageTitles.en[i].toLowerCase()}`
   }))
+  
+  console.log(allNavigationLinks)
   const [isOpen, setIsOpen] = useState(false)
   
   return (
@@ -46,15 +47,14 @@ const Header = ({ languages, location, defaultLangKey}) => {
         <Link className="brand-title" to={homeLink}>
           KODOU
         </Link>
-
      
-      <div 
-        onClick={()=>{setIsOpen(!isOpen)}}
-        role="button" className={`navbar-burger burger ${isOpen? 'is-active' : null}`} aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </div>
+        <div 
+          onClick={()=>{setIsOpen(!isOpen)}}
+          role="button" className={`navbar-burger burger ${isOpen? 'is-active' : null}`} aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </div>
       </div>
 
       <div id="navbarBasicExample" className={`navbar-menu  ${isOpen? 'is-active' : null}`}>
@@ -62,7 +62,7 @@ const Header = ({ languages, location, defaultLangKey}) => {
             <Link to={homeLink} className="navbar-item">
               HOME
             </Link>
-            {allLinks.map((link, i) => (
+            {allNavigationLinks.map((link, i) => (
             <Link key={i} to={link.url} className="navbar-item">
               {link.name.toUpperCase()}
             </Link>
@@ -71,14 +71,14 @@ const Header = ({ languages, location, defaultLangKey}) => {
           <div className="navbar-end">
             <div className="navbar-item has-dropdown is-hoverable">
               <div className="navbar-link">
-                {langmap[langKey]['nativeName']}
+                {langmap[currentLangKey]['englishName']}
               </div>
 
               <div className="navbar-dropdown">
                 {langsMenu.map((lang)=>(
                   !lang.selected && 
                   <Link key={lang.langKey} to={lang.link} className="navbar-item">
-                    {langmap[lang.langKey]['nativeName']}
+                    {langmap[lang.langKey]['englishName']}
                   </Link>
                 ))}
               </div>

@@ -1,37 +1,43 @@
-/**
- * Layout component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.org/docs/use-static-query/
- */
-
 import React from "react"
-import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 import "../styles/main.scss"
 import Header from "./header"
+import { IntlProvider, FormattedDate } from "react-intl"
 
-const Layout = ({ children, location }) => {
+const Layout = ({ children, location, lang }) => {
+
+  // We populated the siteMetaData in `gatsby-config.js` and are extracting it here for some extra language context
   const data = useStaticQuery(graphql`
     query SiteInfoQuery {
       site {
         siteMetadata {
           title
           languages {
-            defaultLangKey
+            defaultLang
             langs
           }    
         }
       }
     }
   `)
+  
+  // langs is an array of all the supported languages
+  // defaultLang is the default site language
+  // title is the website's title
+  const { title} = data.site.siteMetadata
+  const {langs, defaultLang } = data.site.siteMetadata.languages
   return (
-    <>
+    // We use IntlProvider to set the default language of our page
+    <IntlProvider
+      locale={lang}
+      defaultLocale={defaultLang}
+
+    >
       <Header 
         location={location}
-        defaultLangKey={data.site.siteMetadata.languages.defaultLangKey}
-        languages={data.site.siteMetadata.languages.langs}
-        siteTitle={data.site.siteMetadata.title} />
+        defaultLang={defaultLang}
+        languages={langs}
+        siteTitle={title} />
         <main className="section">
           <div className="container"> 
             {children}
@@ -40,17 +46,18 @@ const Layout = ({ children, location }) => {
         <footer>
           <div className="footer">
             <div className="content has-text-centered">
-              © {new Date().getFullYear()}, Built by 
-              {/* <a href="https://jmisteli.com"> Jack Misteli</a> */}
-                        </div>
+            {/* FormattedDate will format our date according to the language we set in IntlProvider locale prop */}
+              © <FormattedDate value={new Date()}
+               year="numeric"
+                month="long"
+                day="numeric"
+                weekday="long" />, Built by 
+              <a href="https://jmisteli.com"> Jack Misteli</a>
             </div>
+          </div>
         </footer>
-    </>
+    </IntlProvider>
   )
-}
-
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
 }
 
 export default Layout

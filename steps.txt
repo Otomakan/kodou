@@ -9,7 +9,7 @@ react-intl: uses JS internationalization API, use REact context and HOC to dynam
 ```js
  languages: {
    langs: ['en', 'js'],
-  defaultLangKey: 'en'}
+  defaultLang: 'en'}
 
 react-18next
 built on i18next uses components to make sure tranlsations rencder correclty
@@ -23,7 +23,7 @@ query SiteInfoQuery {
         siteMetadata {
           title
           languages {
-            defaultLangKey
+            defaultLang
             langs
           }    
         }
@@ -68,7 +68,7 @@ langmap
   const currentLanguageTitles = allLanguageTitles[langKey] || allLanguageTitles['en']
   const allLinks = currentLanguageTitles.map((page, i) => ({
     name: page,
-    url: `${homeLink.replace(defaultLangKey, '')}/${allLanguageTitles.en[i].toLowerCase()}`
+    url: `${homeLink.replace(defaultLang, '')}/${allLanguageTitles.en[i].toLowerCase()}`
   }))
 Maybe do something bett
 

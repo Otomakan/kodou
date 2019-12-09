@@ -1,13 +1,14 @@
-const languages = require('./data/languages')
+const languages = require('./config/languages')
+
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 
 module.exports = {
   siteMetadata: {
-    title: `Art Site`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `Kodou`,
+    description: `Kodou's website about bringing digital art to your hearts`,
+    author: `Jack Misteli`,
     languages
   },
   plugins: [

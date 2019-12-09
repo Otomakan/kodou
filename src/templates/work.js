@@ -3,10 +3,10 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 
 const TeamPage = (props) => {
-  const {works} = props.pageContext
-  console.log(props)
+  const works = props.pageContext.data
+  const lang = props.pageContext.lang
   return (
-  <Layout location={props.location}>
+  <Layout location={props.location} lang={lang}>
     <SEO title="Work" />
     <h1>Work</h1>
     {works.map((work,i)=>{

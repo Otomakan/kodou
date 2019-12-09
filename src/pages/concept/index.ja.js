@@ -8,7 +8,7 @@ import WatchingLinesImage from './WatchingLinesImage'
 
 const IndexPage = (props) => (
   <Layout location={props.location}>
-      <SEO title="Home" />
+      <SEO title="Concept" />
       <h1>Concept</h1>
       <h2>Story</h2>
       <div className="content">
