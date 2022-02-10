@@ -20,7 +20,7 @@
     "gatsby-source-filesystem": "^2.1.39",
     "gatsby-transformer-sharp": "^2.3.6",
     "langmap": "^0.0.16",
-    "node-sass": "^4.13.0",
+    "node-sass": "^7.0.0",
     "prop-types": "^15.7.2",
     "ptz-i18n": "^1.0.0",
     "react": "^16.12.0",
